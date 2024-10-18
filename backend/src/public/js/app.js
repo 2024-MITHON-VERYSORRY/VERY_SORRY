@@ -1,17 +1,13 @@
 const socket = io();
 
-const welcome = document.getElementById("welcome");
-const form = welcome.querySelector("form");
 const room = document.getElementById("room");
 const exchangeBtn = document.getElementById("exchange-btn");
-const waitingMessage = document.getElementById("waiting-message");
 
-room.hidden = true;
+room.hidden = false;
 
-let roomName;
+let roomId; // 방 ID를 저장
 let userMessage = "";
 let otherUserMessage = "";
-let isUserMessageSent = false; // 사용자가 메시지를 보냈는지 체크
 
 // 메시지 추가 함수
 function addMessage(message) {
@@ -27,53 +23,61 @@ function handleMessageSubmit(event) {
   const input = room.querySelector("#msg input");
   const value = input.value;
 
+  if (value.trim() === "") return; // 빈 메시지는 무시
+
   userMessage = value; // 현재 사용자 메시지 저장
-  socket.emit("new_message", value, roomName, () => {
-    addMessage(`You: ${value}`);
+  // 메시지를 해당 방에 전송
+  socket.emit("new_message", value, roomId, () => {
+    addMessage(`You: ${value}`); // 메시지 화면에 추가
   });
-  input.value = "";
+  input.value = ""; // 입력 필드 초기화
 }
 
 // 방 보여주기
 function showRoom() {
-  welcome.hidden = true;
-  room.hidden = false;
+  room.hidden = false; // 채팅방 보이기
   const h3 = room.querySelector("h3");
-  h3.innerText = `Room ${roomName}`;
+  h3.innerText = `Room ID: ${roomId}`; // 방 ID 표시
   const msgForm = room.querySelector("#msg");
-  msgForm.addEventListener("submit", handleMessageSubmit);
+  msgForm.addEventListener("submit", handleMessageSubmit); // 메시지 제출 이벤트 리스너 추가
 }
 
 // 방 제출 처리
-function handleRoomSubmit(event) {
-  event.preventDefault();
-  const input = form.querySelector("input");
-  roomName = input.value;
-  socket.emit("enter_room", roomName, showRoom);
-  input.value = "";
+async function handleRoomSubmit(event) {
+  event.preventDefault(); // 기본 폼 제출 방지
+  // 서버에 방 생성 요청
+  const response = await fetch("/create-room", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json(); // JSON 형식으로 응답 받기
+  roomId = data.roomId; // 응답에서 roomId 추출
+  // 서버에 방 ID 전송 후 방에 입장
+  socket.emit("enter_room", roomId, showRoom);
 }
 
-form.addEventListener("submit", handleRoomSubmit);
-
-// 교환 버튼 클릭 시 메시지 교환 페이지로 이동
+// '완료' 버튼 클릭 시 페이지 이동
 exchangeBtn.addEventListener("click", () => {
-  if (!isUserMessageSent) {
-    // 사용자가 메시지를 보냈다면 교환 버튼 클릭 처리
-    socket.emit("exchange_ready", roomName);
-    isUserMessageSent = true; // 사용자 메시지 전송 플래그 설정
-    waitingMessage.innerText = "상대방의 메시지를 기다리고 있습니다...";
-  }
-});
-
-exchangeBtn.addEventListener("click", () => {
-    window.location.href = `/exchange`; // 페이지이동
+  window.location.href = `/exchange`; // 페이지 이동
 });
 
 // 상대방의 메시지를 받았을 때 처리
 socket.on("exchange_messages", (messages) => {
   otherUserMessage = messages.otherUserMessage;
-  window.location.href = `/exchange-view?messages=${encodeURIComponent(JSON.stringify([userMessage, otherUserMessage]))}`; // 페이지 이동
 });
 
 // 새로운 메시지 수신 처리
+// socket.on("new_message", (msg) => {
+//   addMessage(`Other: ${msg}`); // 상대방의 메시지를 화면에 추가
+// });
 socket.on("new_message", addMessage);
+
+// 방 입장 처리
+document.addEventListener("DOMContentLoaded", () => {
+  const msgForm = room.querySelector("#msg");
+  if (msgForm) {
+    msgForm.addEventListener("submit", handleMessageSubmit); // 폼 이벤트 리스너 추가
+  }
+});

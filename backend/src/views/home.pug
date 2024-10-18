@@ -1,20 +1,18 @@
-//- home.pug
 doctype html
-html
+html(lang="en")
   head
-    title Chat App
+    meta(charset="UTF-8")
+    title 방 생성
     link(rel="stylesheet", href="/public/styles.css")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.min.js")
-    script(src="/public/js/app.js", defer)
+    script(src="/public/js/home.js", defer)
   body
+    h1 채팅방 생성
     div#welcome
       form
-        input(type="text", placeholder="방 이름을 입력하세요", required)
-        button(type="submit") 입장
-    div#room(hidden)
-      h3
-      ul
-      form#msg
-        input(type="text", placeholder="메시지를 입력하세요", required)
-        button(type="submit") 전송
-      button#exchange-btn(type='button') 완료
+        button(type="submit") 방 생성
+    div#room
+      h3 방 ID:
+      p#room-id 
+      button#exchange-btn(type="button") 채팅방으로 이동
+    div#waiting-message
