@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>메시지 교환</title>
+    <link rel="stylesheet" href="/public/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.min.js"></script>
+    <script src="/public/js/exchange.js" defer></script>
+</head>
+<body>
+    <div id="messages-container"></div>
+    <input type="text" id="exchange-input" placeholder="메시지를 입력하세요" required>
+    <button id="send-exchange">전송</button>
+    <div id="waiting-message"></div> <!-- 대기 메시지를 표시할 요소 -->
+</body>
+</html>
