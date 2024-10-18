@@ -41,8 +41,9 @@ wsServer.on("connection", (socket) => {
     done();
   });
 
-  socket.on("exchange_messages", (messages, room) => {
-    socket.to(room).emit("exchange_messages", messages);
+  socket.on("exchange_messages", (messages) => {
+    console.log(`Received exchange_messages: ${JSON.stringify(messages)}`); // 로그 추가
+    socket.broadcast.emit("exchange_messages", messages); // 상대방에게 메시지 전송
   });
 });
 
