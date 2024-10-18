@@ -18,6 +18,7 @@ app.get("/", (_, res) => res.render("home"));
 // 방 생성 요청 처리 (POST 요청을 처리하여 roomId 반환)
 app.post("/create-room", (_, res) => {
   const roomId = uuidv4(); // 새로운 고유 방 ID 생성
+  console.log(`Room created with ID: ${roomId}`);
   res.json({ roomId }); // 생성된 roomId를 JSON 형식으로 반환
 });
 
