@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif; */
+  font-family: "HSSanTokki2.0(2024)";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: "HSSanTokki2.0(2024)";
+  font-weight: lighter;
+  src: url("./fonts/HSSanTokki2.0\(2024\).ttf") format("truetype");
+}
+@font-face {
+  font-family: "KCC-Hanbit";
+  font-weight: lighter;
+  src: url("./fonts/KCC-Hanbit.ttf") format("truetype");
+}
+
+
+/* code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+} */
