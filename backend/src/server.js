@@ -4,6 +4,7 @@ import { Server } from "socket.io";
 import { instrument } from "@socket.io/admin-ui";
 import express from "express";
 import { v4 as uuidv4 } from 'uuid'; // 고유 ID 생성을 위한 UUID 라이브러리
+import nameRouter from "../routers/namerouter.js";
 
 const __dirname = path.resolve();
 const app = express();
@@ -11,6 +12,7 @@ const app = express();
 app.set("view engine", "pug");
 app.set("views", __dirname + "/src/views");
 app.use("/public", express.static(__dirname + "/src/public"));
+app.use("/nameapi", nameRouter);
 
 // 방 생성 페이지
 app.get("/", (_, res) => res.render("home"));
