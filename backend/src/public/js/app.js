@@ -27,8 +27,11 @@ function handleMessageSubmit(event) {
 
   userMessage = value; // 현재 사용자 메시지 저장
   // 메시지를 해당 방에 전송
-  socket.emit("new_message", value, roomId, () => {
+  socket.emit("exchange_messages", value, roomId, () => {
     addMessage(`You: ${value}`); // 메시지 화면에 추가
+  });
+  socket.emit("new_message", value, roomId, () => {
+    addMessage(`나: ${value}`); // 메시지 화면에 추가
   });
   input.value = ""; // 입력 필드 초기화
 }
@@ -65,14 +68,18 @@ exchangeBtn.addEventListener("click", () => {
 
 // 상대방의 메시지를 받았을 때 처리
 socket.on("exchange_messages", (messages) => {
-  otherUserMessage = messages.otherUserMessage;
+  //otherUserMessage = messages.otherUserMessage;
+  addMessage(`상대: ${messages}`);
 });
 
-// 새로운 메시지 수신 처리
+//새로운 메시지 수신 처리
 // socket.on("new_message", (msg) => {
 //   addMessage(`Other: ${msg}`); // 상대방의 메시지를 화면에 추가
 // });
-socket.on("new_message", addMessage);
+// socket.emit("exchange_messages", value, roomId, () => {
+//     addMessage(`Other: ${value}`); // 메시지 화면에 추가
+//   });
+//socket.on("exchange_messages", addMessage);
 
 // 방 입장 처리
 document.addEventListener("DOMContentLoaded", () => {
