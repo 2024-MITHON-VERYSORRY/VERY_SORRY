@@ -1,0 +1,46 @@
+body {
+    color: #F7FBEA;
+}
+
+.logo {
+    width: 333px;
+    height: 122px;
+    margin-top: 138px;
+    margin-left: 52px;
+}
+
+.letter {
+    width: 888px;
+    height: auto;
+    margin-top: 878px;
+    margin-left: 70px;
+    display: block; /* 이미지를 블록 형태로 표시 */
+}
+
+.btn {
+    width: 421.24px;
+    height: 136.24px;
+    margin-top: -312px;
+    margin-left: 350px;
+}
+
+.apple-container {
+    position: relative;
+    width: fit-content; /* 이미지를 감싸는 크기로 설정 */
+}
+
+.input-on-apple {
+    position: absolute;
+    top: 60%; /* 이미지의 50% 지점에 배치 */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%; /* 입력 필드의 너비 */
+    padding: 10px;
+    font-size: 35px; /* 텍스트 크기 35px로 설정 */
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    background-color: transparent; /* 배경 투명하게 설정 */
+    color: black; /* 텍스트 색상을 검은색으로 설정 */
+    border : none;
+}
