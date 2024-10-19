@@ -8,6 +8,7 @@ function App() {
 
   const Img = {
     paddingTop: '616px',
+    marginLeft: '394px',
     width: '290px',
     height: 'auto',
   };
@@ -56,7 +57,7 @@ function App() {
   };
 
   const handleButtonClick = () => {
-    navigate('/Request');
+    navigate('/Write');
   }
   return (
     <div>

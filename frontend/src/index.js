@@ -1,18 +1,52 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
+import Write from './Write';
+import Write_After from './Write_After';
+import Accept from './Accept';
+import Sign from './Sign';
+import Result from './result';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-<React.StrictMode>
-    <BrowserRouter> 
-      <App />
-    </BrowserRouter>
+  <React.StrictMode>
+    <Router>
+      <Routes>
+        <Route path='/' element={<App />} />
+        <Route path="/Write" element={<Write />} />
+        <Route path="/Write_After" element={<Write_After />} />
+        <Route path="/Accept" element={<Accept />} />
+        <Route path="/Sign" element={<Sign />} />
+        <Route path="/Result" element={<Result />} />
+      </Routes>
+    </Router>
   </React.StrictMode>
 );
+
+reportWebVitals();
+
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <Router>
+//       <Routes>
+//         <Route path='/' element={<App />} />
+//         <Route path="/Write" element={<Write />} />
+//       </Routes>
+//     </Router>
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );
+
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+// <React.StrictMode>
+//     <BrowserRouter> 
+//       <App />
+//     </BrowserRouter>
+//   </React.StrictMode>
+// );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

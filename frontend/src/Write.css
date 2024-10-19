@@ -1,0 +1,11 @@
+.container{
+    display: center;
+}
+.Img {
+    width: 333px;
+    height: 122px;
+}
+input::placeholder {
+    font-family: 'KCC-Hanbit';
+    font-weight: lighter;
+}
