@@ -101,4 +101,5 @@ body {
 .apple-img {
     width: 816px; /* 이미지 크기 */
     height: 1171px; /* 비율에 맞게 높이 조정 */
+    margin-top: -800px;
 }

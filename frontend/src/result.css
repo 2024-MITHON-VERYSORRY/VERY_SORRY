@@ -26,6 +26,7 @@ body {
 
 .apple-container {
     position: relative;
+    
     width: fit-content; /* 이미지를 감싸는 크기로 설정 */
 }
 
