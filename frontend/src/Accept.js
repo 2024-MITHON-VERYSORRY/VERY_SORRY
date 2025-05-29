@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './index.css';
-// i/mport './Accept.css';
+import './Accept.css';
 import envelope from './img/envelope.png';
 
 function Accept() {
@@ -26,7 +26,6 @@ function Accept() {
         fontSize: 'lighter',
         fontSize: '50px',
         fontWeight: 'lighter',
-        color: '#000000',
         // marginBottom: '121.04px',
         textAlign: 'center',
     };

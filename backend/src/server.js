@@ -1,68 +1,35 @@
-import http from "http";
-import path from 'path';
-import { Server } from "socket.io";
-import { instrument } from "@socket.io/admin-ui";
 import express from "express";
-import { v4 as uuidv4 } from 'uuid';
+import {webSocket} from "./socket.js";
+import path from "path";
 
-const __dirname = path.resolve();
 const app = express();
 
-app.set("view engine", "pug");
-app.set("views", __dirname + "/src/views");
-app.use("/public", express.static(__dirname + "/src/public"));
+const __dirname = path.resolve(); // pwd
 
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname + "/src/views"));
+
+// 방 생성 페이지
 app.get("/", (_, res) => res.render("home"));
-app.get("/exchange", (_, res) => res.render("exchange"));
 
-
-
-app.post("/create-room", (_, res) => {
-  const roomId = uuidv4();
-  res.json({ roomId });
+// 방 생성 요청 처리 - roomId 반환
+app.get("/create-room", (_, res) => {
+  const roomId = Math.random().toString(36).substring(2, 8);;
+  console.log(`Room created with ID: ${roomId}`);
+  res.redirect(`/room/${roomId}`);
 });
 
-app.get("/app/:roomId", (req, res) => {
+// 채팅방 페이지
+app.get("/room/:roomId", (req, res) => {
   const { roomId } = req.params;
-  res.render("app", { roomId });
-});
-
-
-app.get("/exchange-view", (req, res) => {
-  const messages = JSON.parse(req.query.messages);
-  res.render("exchange-view", { messages });
+  console.log(`enter room : ${roomId}`);
+  res.render("room", {roomId});
 });
 
 app.get("/*", (_, res) => res.redirect("/"));
 
-const httpServer = http.createServer(app);
-const wsServer = new Server(httpServer, {
-  cors: {
-    origin: ["https://admin.socket.io"],
-    credentials: true,
-  },
+const server = app.listen(3000, ()=>{
+  console.log('listening on 3000');
 });
 
-instrument(wsServer, {
-  auth: false,
-});
-
-wsServer.on("connection", (socket) => {
-  socket.on("enter_room", (roomId, done) => {
-    socket.join(roomId);
-    done();
-  });
-
-  socket.on("new_message", (msg, roomId, done) => {
-    socket.to(roomId).emit("new_message", msg);
-    done();
-  });
-
-  socket.on("exchange_messages", (messages) => {
-    console.log(`Received exchange_messages: ${JSON.stringify(messages)}`);
-    socket.broadcast.emit("exchange_messages", messages);
-  });
-});
-
-const handleListen = () => console.log(`Listening on http://localhost:3000`);
-httpServer.listen(3000, handleListen);
+webSocket(server);

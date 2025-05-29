@@ -22,13 +22,11 @@ function Write() {
         fontSize: '62.31px',
         fontWeight: 'lighter',
         marginBottom: '93.46px',
-        color: '#000000',
         marginTop: '373.59px',
     };
     const subTitle = {
         fontSize: '38.94px',
         fontWeight: 'lighter',
-        color: '#000000',
     };
     const subText = {
         fontSize: '31.15px',

@@ -24,7 +24,6 @@ function App() {
     fontSize: '113px', 
     fontWeight: 'lighter',
     padding: 0,
-    color: '#000000',
     marginTop: -30,
   };
   const Title = {
